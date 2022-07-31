@@ -1,0 +1,42 @@
+{
+	"info": {
+		"_postman_id": "35021f28-2e10-482b-a82c-9185d99a9e91",
+		"name": "FlexPag",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19975063"
+	},
+	"item": [
+		{
+			"name": "Criando pagamento",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Deletando pagamento/agedamento",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "BUSCANDO PAGAMENTOS/AGENDAMENTOS",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Atualizando Pagamento/Agedamento",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}

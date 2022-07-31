@@ -57,6 +57,7 @@ public class pagamentoService {
         return Pagamento.builder()
                 .id(pagamentoDto.getId())
                 .descricao(pagamentoDto.getDescricao())
+                .dataHoraPagamento(LocalDateTime.now())
                 .statusPagamento(Status.pending)
                 .valor(pagamentoDto.getValor())
                 .build();
@@ -86,11 +87,8 @@ public class pagamentoService {
     public void deletePagamento(Long id){
         Pagamento pag = buscarPorId(id).orElseThrow(()-> new NotFoundException("Não foi possivel encontrar o ID referente a essa busca: " + id));
         
-        if (pag.getStatusPagamento().equals(Status.valueOf("pending"))){
-            deletePagamento(id);
-        } else {
-            throw new RuntimeException("O pagamento já foi realizado e não pode ser excluido ou editados");
-
+        if (pag.getStatusPagamento().equals(Status.valueOf("paid"))){
+            throw new RuntimeException("O pagamento já foi realizado e não pode ser excluido");
         }
         log.info("Apagando o pagamento referente ao Id = {}", pag.getId());
         repository.deleteById(id);
@@ -100,6 +98,12 @@ public class pagamentoService {
     public pagamentoDTO criandoPayment(pagamentoDTO pagDTO){
         Pagamento pagamento = repository.save(construindoPagamento(pagDTO));
         return pagDTO;
+    }
+
+    public Pagamento buscandoPorStatus(Status statusPagamento){
+        Pagamento pag = buscandoPorStatus(statusPagamento);
+
+        return repository.findByStatusPagamento(statusPagamento);
     }
 
 }

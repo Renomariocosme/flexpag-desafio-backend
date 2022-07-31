@@ -58,5 +58,11 @@ public class pagamentoController {
         service.deletePagamento(id);
     }
 
+    @GetMapping("/{status}")
+    public Pagamento buscarStatus(@PathVariable Status status){
+        log.info("Realizando busca referente aos status PENDING/PAID");
+        return service.buscandoPorStatus(status);
+    }
+
 
 }
