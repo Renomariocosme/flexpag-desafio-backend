@@ -37,6 +37,22 @@
 				"header": []
 			},
 			"response": []
+		},
+		{
+			"name": "Busca Por Status",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Busca por ID",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
 		}
 	]
 }

@@ -76,7 +76,7 @@ public class pagamentoService {
         Pagamento pag = buscarPorId(id).orElseThrow(()-> new NotFoundException("Não foi possivel encontrar o ID referente a essa busca: " + id));
         Status status = pag.getStatusPagamento();
 
-        if (pag.getStatusPagamento().equals(Status.valueOf("paid"))){
+        if (pag.getStatusPagamento().equals(Status.paid)){
             throw new RuntimeException("O pagamento já foi realizado e não pode ser excluido");
         }
         log.info("Apagando o pagamento referente ao Id = ", pag.getId());
