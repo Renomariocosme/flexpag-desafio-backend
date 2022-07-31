@@ -24,14 +24,6 @@ public class pagamentoService {
     private final pagamentoRepository repository;
 
 
-    public void escolherStatus(Pagamento pag){
-
-        pag.setStatusPagamento(Status.pending);
-
-        log.info("O pagamento com a descricao = {} mudou", pag.getDescricao());
-        repository.save(pag);
-    }
-
     public List<Pagamento> buscarTodos(){
 
         log.info("Buscando todos os pagamentos registrados");
@@ -57,53 +49,51 @@ public class pagamentoService {
         return Pagamento.builder()
                 .id(pagamentoDto.getId())
                 .descricao(pagamentoDto.getDescricao())
-                .dataHoraPagamento(LocalDateTime.now())
+                .dataHoraPagamento(pagamentoDto.getDataHoraPagamento())
                 .statusPagamento(Status.pending)
                 .valor(pagamentoDto.getValor())
                 .build();
     }
 
-    public pagamentoDTO criandoPagamento(pagamentoDTO pagDTO){
-        Pagamento pag = repository.save(construindoPagamento(pagDTO));
-        return pagDTO;
-
-    }
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     public Pagamento atualizarPagamento(Pagamento pag){
+        log.info("Atualizando o pagamento referente ao Id = {}", pag.getId(), pag.getDescricao());
 
         LocalDateTime dateTime = pag.getDataHoraPagamento();
 
         if (pag.getStatusPagamento().equals(Status.valueOf("paid"))){
-            throw new RuntimeException("O pagamento já foi realizado e não pode ser editado");
-        } else {
-            pag.setDataHoraPagamento(dateTime);
+            throw new RuntimeException("O pagamento já foi realizado e não pode ser editado ou excluído");
         }
-        pag.setDataHoraPagamento(LocalDateTime.now());
+
+        pag.setDataHoraPagamento(dateTime);
+        pag.setStatusPagamento(Status.paid);
         return repository.save(pag);
     }
 
 
     public void deletePagamento(Long id){
         Pagamento pag = buscarPorId(id).orElseThrow(()-> new NotFoundException("Não foi possivel encontrar o ID referente a essa busca: " + id));
-        
+        Status status = pag.getStatusPagamento();
+
         if (pag.getStatusPagamento().equals(Status.valueOf("paid"))){
             throw new RuntimeException("O pagamento já foi realizado e não pode ser excluido");
         }
-        log.info("Apagando o pagamento referente ao Id = {}", pag.getId());
+        log.info("Apagando o pagamento referente ao Id = ", pag.getId());
         repository.deleteById(id);
     }
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     public pagamentoDTO criandoPayment(pagamentoDTO pagDTO){
+        log.info("Criando o pagamento referente ao id = " + pagDTO.getId() + pagDTO.getDescricao());
         Pagamento pagamento = repository.save(construindoPagamento(pagDTO));
         return pagDTO;
     }
 
-    public Pagamento buscandoPorStatus(Status statusPagamento){
-        Pagamento pag = buscandoPorStatus(statusPagamento);
-
-        return repository.findByStatusPagamento(statusPagamento);
+    public List<Pagamento> buscandoPorStatus(String pagStatus){
+        log.info("Filtro por Status..." + pagStatus);
+        List<Pagamento> pagList = repository.findByStatusPagamento(pagStatus);
+        return pagList;
     }
 
 }

@@ -1,10 +1,10 @@
 package com.flexpag.paymentscheduler.repository;
 
 import com.flexpag.paymentscheduler.entity.Pagamento;
-import com.flexpag.paymentscheduler.enumStatus.Status;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -12,5 +12,5 @@ public interface pagamentoRepository extends JpaRepository <Pagamento, Long> {
 
     Optional<Pagamento> findById(Long id);
 
-    Pagamento findByStatusPagamento(Status statusPagamento);
+    public List<Pagamento> findByStatusPagamento(String status);
 }

@@ -58,10 +58,11 @@ public class pagamentoController {
         service.deletePagamento(id);
     }
 
-    @GetMapping("/{status}")
-    public Pagamento buscarStatus(@PathVariable Status status){
+    @GetMapping("/status")
+    public ResponseEntity<List<Pagamento>> buscarStatus(@RequestParam(value = "status", required = false) String status){
         log.info("Realizando busca referente aos status PENDING/PAID");
-        return service.buscandoPorStatus(status);
+        List<Pagamento> pagamentoList = service.buscandoPorStatus(status);
+        return ResponseEntity.ok().body(pagamentoList);
     }
 
 

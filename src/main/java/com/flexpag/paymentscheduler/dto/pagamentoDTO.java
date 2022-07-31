@@ -42,7 +42,7 @@ public class pagamentoDTO implements Serializable {
                 .id(pag.getId())
                 .descricao(pag.getDescricao())
                 .statusPagamento(pag.getStatusPagamento())
-                .dataHoraPagamento(LocalDateTime.now())
+                .dataHoraPagamento(pag.getDataHoraPagamento())
                 .valor(pag.getValor())
                 .build();
     }

@@ -40,8 +40,6 @@ public class Pagamento implements Serializable {
     private Double valor;
 
     @Column(name = "data")
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm")
     private LocalDateTime dataHoraPagamento;
 
