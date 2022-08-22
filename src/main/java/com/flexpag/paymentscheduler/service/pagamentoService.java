@@ -84,7 +84,7 @@ public class pagamentoService {
     }
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    public pagamentoDTO criandoPayment(pagamentoDTO pagDTO){
+    public pagamentoDTO criandoPagamento(pagamentoDTO pagDTO){
         log.info("Criando o pagamento referente ao id = " + pagDTO.getId() + pagDTO.getDescricao());
         Pagamento pagamento = repository.save(construindoPagamento(pagDTO));
         return pagDTO;

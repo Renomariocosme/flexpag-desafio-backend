@@ -40,7 +40,7 @@ public class pagamentoController {
     @PostMapping("/criar")
     public ResponseEntity<pagamentoDTO> salvarPagamento(@Valid @RequestBody pagamentoDTO pagDTO){
         pagDTO.setStatusPagamento(Status.pending);
-        return new ResponseEntity<>(service.criandoPayment(pagDTO), HttpStatus.CREATED);
+        return new ResponseEntity<>(service.criandoPagamento(pagDTO), HttpStatus.CREATED);
     }
 
     @PutMapping("/atualizar")
